@@ -125,7 +125,7 @@
 ## 📁 文件存储位置
 
 ### 默认存储路径
-/vol1/@appcenter/file-collector/server/uploads/
+/vol1/@appcenter/file-collector/uploads/
 
 ### 存储结构示例
 /vol1/@appcenter/file-collector/
