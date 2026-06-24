@@ -36,7 +36,7 @@
 ### 下载 fpk 文件
 
 - Gitee 仓库：https://gitee.com/hhxs2025/file-collector
-- Releases 页面：https://gitee.com/hhxs2025/file-collector/releases
+- Releases 页面：https://gitee.com/hhxs2025/file-collector/release
 - 直接下载：https://gitee.com/hhxs2025/file-collector/releases/download/v1.0.0/file-collector-1.0.0.fpk
 
 ### 安装步骤
