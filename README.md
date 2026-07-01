@@ -34,9 +34,6 @@
 ## 📥 下载与安装
 
 ### 下载 fpk 文件
-
-- Gitee 仓库：https://gitee.com/hhxs2025/file-collector
-- Releases 页面：https://gitee.com/hhxs2025/file-collector/releases
 - 直接下载：https://gitee.com/hhxs2025/file-collector/releases/download/1.0.0/file-collector-1.0.0-x86.fpk
 
 ### 安装步骤
@@ -144,39 +141,6 @@
 1. 在飞牛应用中心 → 文件收集助手 → 设置
 2. 下拉至「文件存储位置」→「编辑」
 3. 输入你想存放文件的路径
-
-
-## 🐛 常见问题
-
-### Q1：上传文件失败，提示「上传失败，请检查文件大小限制」
-
-原因：文件大小超过管理员设置的限制（默认 50MB）。
-
-解决：压缩文件后重新提交，或联系管理员调大文件限制。
-
-### Q2：上传文件失败，提示「任务已过期」
-
-原因：任务设置了截止时间，当前时间已超过截止时间。
-
-解决：联系管理员延长截止时间或创建新任务。
-
-### Q3：如何查看应用日志？
-
-SSH 登录飞牛，执行：
-cat /vol1/@appcenter/file-collector/var/info.log
-
-### Q4：管理员密码忘了怎么办？
-
-SSH 登录飞牛：
-1. 查看配置文件：cat /vol1/@appcenter/file-collector/var/config.json
-2. 生成新密码 SHA256：python3 -c "import hashlib; print(hashlib.sha256('新密码'.encode()).hexdigest())"
-3. 编辑 config.json，替换 admin_password_hash 的值
-
-### Q5：无法访问应用页面？
-
-1. 检查应用是否处于「运行中」状态
-2. 检查端口是否被占用：netstat -tlnp | grep 5664
-3. 查看应用日志排查错误
 
 
 ## 🔐 安全建议
