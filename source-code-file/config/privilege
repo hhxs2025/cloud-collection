@@ -1,0 +1,7 @@
+{
+  "username": "cloud-collection",
+  "groupname": "cloud-collection",
+  "defaults": {
+    "run-as": "package"
+  }
+}

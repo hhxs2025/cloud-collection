@@ -1,0 +1,15 @@
+appname=cloud-collection
+version=1.0.1
+display_name=云收集
+desc="""云收集(原名:文件收集助手)是一款为FNOS开发的轻量级文件收集工具，支持创建收集任务、多文件上传、二维码分享，适合团队文件收集、学生作业提交等场景。<p><strong>核心功能</strong></p><p>1.管理后台公网收集地址前缀设置；</p><p>2.管理后台新建收集任务名称设置、单文件大小上限设置、收集截止时间设置；</p><p>3.管理后台既有任务列表显示，收集地址支持链接与二维码；</p><p>4.管理后台密码修改。</p>"""
+platform=x86
+source=thirdparty
+maintainer=晦华先生
+maintainer_url=https://gitee.com/hhxs2025/cloud-collection/blob/master/README.md
+distributor=晦华先生
+ctl_stop=true
+desktop_uidir=ui
+desktop_applaunchname=cloud-collection.Application
+service_port=5664
+checkport=true
+disable_authorization_path=false

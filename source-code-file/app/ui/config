@@ -1,0 +1,20 @@
+{
+  ".url": {
+    "cloud-collection.Application": {
+      "noDisplay": false,
+      "allUsers": false,
+      "fileTypes": [],
+      "control": {
+        "accessPerm": "editable"
+      },
+      "protocol": "http",
+      "gatewayPrefix": "",
+      "gatewaySocket": "",
+      "title": "云收集",
+      "icon": "images/icon_{0}.png",
+      "type": "iframe",
+      "port": "5664",
+      "url": "/"
+    }
+  }
+}

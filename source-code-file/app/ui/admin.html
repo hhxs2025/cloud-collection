@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云收集 · 管理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; 
+            background: #f2f0eb; 
+            padding: 24px 20px 40px; 
+            color: #2c2c2c;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        .header { 
+            background: #fff; 
+            border: 1px solid #e8e5e0;
+            border-radius: 4px; 
+            padding: 16px 24px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .header h1 { font-size: 1.2rem; font-weight: 600; color: #1a1a1a; }
+        .header .nav a { 
+            color: #888; 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            margin-left: 18px; 
+        }
+        .header .nav a:hover { color: #333; }
+        
+        .card { 
+            background: #fff; 
+            border: 1px solid #e8e5e0;
+            border-radius: 4px; 
+            padding: 20px 24px; 
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .card h2 { 
+            font-size: 0.95rem; 
+            font-weight: 600; 
+            color: #1a1a1a; 
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e8e5e0;
+        }
+        
+        .row { 
+            display: flex; 
+            gap: 12px; 
+            align-items: flex-end; 
+            flex-wrap: wrap; 
+        }
+        .row .field { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 3px; 
+            flex: 1 1 180px;
+        }
+        .row .field label { 
+            font-size: 0.75rem; 
+            font-weight: 500; 
+            color: #666; 
+        }
+        .row .field input, 
+        .row .field select { 
+            padding: 6px 10px; 
+            border: 1px solid #d6d2cc; 
+            border-radius: 3px; 
+            font-size: 0.85rem; 
+            background: #fcfcfb;
+        }
+        .row .field input:focus { 
+            outline: none; 
+            border-color: #b8a99a; 
+            background: #fff;
+        }
+        .row .field input[type="text"] { width: 100%; min-width: 140px; }
+        .row .field input[type="number"] { width: 80px; }
+        .row .field input[type="datetime-local"] { width: 160px; }
+        
+        .btn { 
+            padding: 6px 18px; 
+            background: #2c2c2c; 
+            color: #fff; 
+            border: none; 
+            border-radius: 3px; 
+            font-size: 0.8rem; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .btn:hover { background: #1a1a1a; }
+        .btn-danger { background: #9e6b6b; }
+        .btn-danger:hover { background: #7a4a4a; }
+        .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
+        .btn-success { background: #6b7a6b; }
+        .btn-success:hover { background: #4a5a4a; }
+        
+        .alert { 
+            padding: 10px 16px; 
+            border-radius: 3px; 
+            margin-bottom: 14px; 
+            font-size: 0.85rem; 
+            border: 1px solid #e8e5e0;
+        }
+        .alert.success { background: #f0f3ed; color: #3d5a3d; border-color: #d0ddd0; }
+        .alert.error { background: #f6f0ee; color: #7a4a4a; border-color: #e8d6d4; }
+        .alert.warning { background: #fcf8ed; color: #7a6a3d; border-color: #ece4d0; }
+        
+        .info-text { font-size: 0.7rem; color: #bbb; margin-top: 4px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f6f5f2; font-weight: 500; color: #555; }
+        tr:hover { background: #faf9f7; }
+        .badge { 
+            display: inline-block; 
+            padding: 1px 10px; 
+            border-radius: 3px; 
+            font-size: 0.7rem; 
+            background: #f0f3ed; 
+            color: #3d5a3d;
+        }
+        .link-cell { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+        .link-cell input { 
+            flex: 1; 
+            min-width: 120px; 
+            padding: 4px 8px; 
+            border: 1px solid #d6d2cc; 
+            border-radius: 3px; 
+            font-size: 0.75rem; 
+            background: #fcfcfb;
+        }
+        .empty { text-align: center; color: #bbb; padding: 30px 0; font-size: 0.9rem; }
+        
+        .qr-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.35);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .qr-modal.show { display: flex; }
+        .qr-box {
+            background: #fff;
+            border-radius: 4px;
+            padding: 24px 28px;
+            width: 320px;
+            text-align: center;
+            border: 1px solid #e8e5e0;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .qr-box .qr-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+        .qr-box .qr-sub { font-size: 0.8rem; color: #888; margin-bottom: 14px; }
+        .qr-box .qr-img { width: 160px; height: 160px; margin: 0 auto 12px; background: #f6f5f2; display: flex; align-items: center; justify-content: center; }
+        .qr-box .qr-url { font-size: 0.7rem; color: #999; word-break: break-all; margin-bottom: 14px; }
+        .qr-box .qr-actions { display: flex; gap: 10px; }
+        .qr-box .qr-actions .btn { flex: 1; text-align: center; }
+        .qr-box .qr-close { margin-top: 12px; }
+        .qr-box .qr-close .btn { background: #ccc; color: #333; }
+        .qr-box .qr-close .btn:hover { background: #bbb; }
+        
+        @media (max-width: 700px) {
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .header .nav a { margin-left: 0; margin-right: 16px; }
+            .row { flex-direction: column; align-items: stretch; }
+            .row .field { flex: 1 1 auto; }
+            .row .field input[type="number"] { width: 100%; }
+            .row .field input[type="datetime-local"] { width: 100%; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 6px 8px; }
+            .link-cell input { min-width: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>云收集 · 管理</h1>
+            <div class="nav">
+                <a href="/admin/login">登录页</a>
+                <a href="/logout">退出</a>
+            </div>
+        </div>
+        
+        <div id="alert-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+        </div>
+        
+        <!-- 公网地址 -->
+        <div class="card">
+            <h2>公网地址</h2>
+            <div class="row">
+                <div class="field" style="flex:2;">
+                    <label>收集链接前缀</label>
+                    <input type="text" id="public_url_input" value="{{ public_url }}" placeholder="https://your.domain.com">
+                    <div class="info-text">留空自动使用当前地址</div>
+                </div>
+                <button class="btn btn-success" id="save_public_url_btn">保存</button>
+            </div>
+        </div>
+        
+        <!-- 新建任务 -->
+        <div class="card">
+            <h2>新建收集任务</h2>
+            <form method="post" action="/admin/task/create">
+                <div class="row">
+                    <div class="field">
+                        <label>任务名称</label>
+                        <input type="text" name="task_name" placeholder="如：2026年工作总结" required>
+                    </div>
+                    <div class="field">
+                        <label>单文件上限 (MB)</label>
+                        <input type="number" name="max_size_mb" value="50" min="1">
+                    </div>
+                    <div class="field">
+                        <label>截止时间</label>
+                        <input type="datetime-local" name="deadline">
+                    </div>
+                    <button type="submit" class="btn">创建</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- 任务列表 -->
+        <div class="card">
+            <h2>已有任务</h2>
+            {% if tasks %}
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>上限</th>
+                                <th>截止</th>
+                                <th>链接</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in tasks %}
+                            <tr>
+                                <td><strong>{{ task.name }}</strong></td>
+                                <td>{{ task.max_size_mb }} MB</td>
+                                <td>{{ task.deadline.replace('T', ' ') if task.deadline else '无' }}</td>
+                                <td>
+                                    <div class="link-cell">
+                                        <input type="text" id="link-{{ task.id }}" value="{{ base_url }}/fc/{{ task.id }}" readonly>
+                                        <button class="btn btn-sm" onclick="copyLink('{{ task.id }}')">复制</button>
+                                        <button class="btn btn-sm" onclick="showQR('{{ task.id }}', '{{ base_url }}/fc/{{ task.id }}', '{{ task.name }}')">二维码</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <form method="post" action="/admin/task/delete/{{ task.id }}" style="display:inline;" onsubmit="return confirm('确定删除？')">
+                                        <button type="submit" class="btn btn-danger btn-sm">删除</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty">暂无任务，创建一个吧</div>
+            {% endif %}
+        </div>
+        
+        <!-- 修改密码 -->
+        <div class="card">
+            <h2>修改密码</h2>
+            <form method="post" action="/admin/password">
+                <div class="row">
+                    <div class="field">
+                        <label>新密码</label>
+                        <input type="password" name="new_password" required>
+                    </div>
+                    <button type="submit" class="btn">更新</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- QR Modal -->
+    <div class="qr-modal" id="qr-modal">
+        <div class="qr-box">
+            <div class="qr-title" id="qr-title">二维码</div>
+            <div class="qr-sub" id="qr-sub">扫码提交文件</div>
+            <div class="qr-img" id="qr-img-container">⏳</div>
+            <div class="qr-url" id="qr-url"></div>
+            <div class="qr-actions">
+                <button class="btn btn-sm" id="qr-download-btn">保存图片</button>
+                <button class="btn btn-sm" id="qr-copy-btn">复制链接</button>
+            </div>
+            <div class="qr-close">
+                <button class="btn btn-sm" id="qr-close-btn">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let currentQR = null;
+        
+        function copyLink(id) {
+            const input = document.getElementById('link-' + id);
+            input.select();
+            document.execCommand('copy');
+            alert('已复制');
+        }
+        
+        function closeQR() {
+            document.getElementById('qr-modal').classList.remove('show');
+        }
+        
+        async function showQR(id, url, name) {
+            const modal = document.getElementById('qr-modal');
+            document.getElementById('qr-title').textContent = name;
+            document.getElementById('qr-url').textContent = url;
+            modal.classList.add('show');
+            
+            const container = document.getElementById('qr-img-container');
+            container.textContent = '⏳ 生成中...';
+            
+            try {
+                const res = await fetch('/qr?url=' + encodeURIComponent(url));
+                const data = await res.json();
+                if (data.qr_image) {
+                    container.innerHTML = '<img src="' + data.qr_image + '" style="width:160px;height:160px;">';
+                    currentQR = data.qr_image;
+                } else {
+                    container.textContent = '❌ 失败';
+                }
+            } catch {
+                container.textContent = '❌ 失败';
+            }
+        }
+        
+        document.getElementById('qr-close-btn').addEventListener('click', closeQR);
+        document.getElementById('qr-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeQR();
+        });
+        
+        document.getElementById('qr-download-btn').addEventListener('click', function() {
+            if (currentQR) {
+                const a = document.createElement('a');
+                a.download = 'qrcode.png';
+                a.href = currentQR;
+                a.click();
+            } else {
+                alert('请先生成二维码');
+            }
+        });
+        
+        document.getElementById('qr-copy-btn').addEventListener('click', function() {
+            const url = document.getElementById('qr-url').textContent;
+            const input = document.createElement('input');
+            input.value = url;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            alert('已复制');
+        });
+        
+        // 保存公网地址
+        document.getElementById('save_public_url_btn').addEventListener('click', async function() {
+            const url = document.getElementById('public_url_input').value.trim();
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = '保存中...';
+            try {
+                const res = await fetch('/admin/save_public_url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ public_url: url })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('已保存，页面刷新');
+                    location.reload();
+                } else {
+                    alert('保存失败');
+                }
+            } catch {
+                alert('网络错误');
+            }
+            btn.disabled = false;
+            btn.textContent = '保存';
+        });
+    </script>
+</body>
+</html>

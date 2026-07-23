@@ -1,0 +1,24 @@
+[
+  {
+    "stepTitle": "存储位置",
+    "items": [
+      {
+        "type": "tips",
+        "field": "wizard_default",
+        "label": "示例项",
+        "rules": [],
+        "options": [],
+        "helpText": "文件默认保存在 <strong>应用文件/cloud-collection</strong> 目录"
+      },
+      {
+        "type": "text",
+        "field": "wizard_upload_path",
+        "label": "自定义存储路径（可选）",
+        "rules": [],
+        "options": [],
+        "helpText": "留空则使用默认路径，例如：/vol1/1000/我的收集文件",
+        "initValue": ""
+      }
+    ]
+  }
+]
