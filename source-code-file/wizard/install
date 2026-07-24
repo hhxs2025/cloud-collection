@@ -20,5 +20,19 @@
         "initValue": ""
       }
     ]
+  },
+  {
+    "stepTitle": "端口设置",
+    "items": [
+      {
+        "type": "text",
+        "field": "wizard_port",
+        "label": "服务端口设置",
+        "rules": [],
+        "options": [],
+        "helpText": "请设置端口号",
+        "initValue": "5664"
+      }
+    ]
   }
 ]

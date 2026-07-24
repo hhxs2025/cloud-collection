@@ -13,7 +13,7 @@
       "title": "云收集",
       "icon": "images/icon_{0}.png",
       "type": "iframe",
-      "port": "5664",
+      "port": "${wizard_port}",
       "url": "/"
     }
   }
