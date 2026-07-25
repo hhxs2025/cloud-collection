@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>云收集 · 管理</title>
+    <title>云收集-管理</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -32,6 +32,7 @@
             text-decoration: none; 
             font-size: 0.85rem; 
             margin-left: 18px; 
+            cursor: pointer;
         }
         .header .nav a:hover { color: #333; }
         
@@ -54,7 +55,7 @@
         
         .row { 
             display: flex; 
-            gap: 12px; 
+            gap: 10px; 
             align-items: flex-end; 
             flex-wrap: wrap; 
         }
@@ -62,7 +63,8 @@
             display: flex; 
             flex-direction: column; 
             gap: 3px; 
-            flex: 1 1 180px;
+            flex: 0 1 auto;
+            align-items: center;
         }
         .row .field label { 
             font-size: 0.75rem; 
@@ -82,8 +84,12 @@
             border-color: #b8a99a; 
             background: #fff;
         }
-        .row .field input[type="text"] { width: 100%; min-width: 140px; }
-        .row .field input[type="number"] { width: 80px; }
+        .row .field input[type="text"] { 
+            width: 100%; 
+            min-width: 140px; 
+            max-width: 200px;
+        }
+        .row .field input[type="number"] { width: 70px; }
         .row .field input[type="datetime-local"] { width: 160px; }
         
         .btn { 
@@ -142,7 +148,8 @@
         }
         .empty { text-align: center; color: #bbb; padding: 30px 0; font-size: 0.9rem; }
         
-        .qr-modal {
+        /* ===== 模态窗口通用 ===== */
+        .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
@@ -152,15 +159,63 @@
             align-items: center;
             z-index: 999;
         }
-        .qr-modal.show { display: flex; }
-        .qr-box {
+        .modal.show { display: flex; }
+        .modal-box {
             background: #fff;
             border-radius: 4px;
-            padding: 24px 28px;
-            width: 320px;
-            text-align: center;
+            padding: 28px 32px;
+            max-width: 480px;
+            width: 100%;
             border: 1px solid #e8e5e0;
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-box .modal-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e5e0;
+            margin-bottom: 16px;
+        }
+        .modal-box .modal-body {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #444;
+        }
+        .modal-box .modal-body p {
+            margin-bottom: 10px;
+        }
+        .modal-box .modal-body ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        .modal-box .modal-body ul li {
+            margin-bottom: 4px;
+        }
+        .modal-box .modal-body code {
+            background: #f0ede8;
+            padding: 0 6px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            color: #555;
+        }
+        .modal-box .modal-close {
+            margin-top: 16px;
+            text-align: right;
+            border-top: 1px solid #eee;
+            padding-top: 14px;
+        }
+        .modal-box .modal-close .btn {
+            background: #ccc;
+            color: #333;
+        }
+        .modal-box .modal-close .btn:hover { background: #bbb; }
+        
+        /* ===== QR 模态 ===== */
+        .qr-box {
+            text-align: center;
         }
         .qr-box .qr-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
         .qr-box .qr-sub { font-size: 0.8rem; color: #888; margin-bottom: 14px; }
@@ -168,28 +223,28 @@
         .qr-box .qr-url { font-size: 0.7rem; color: #999; word-break: break-all; margin-bottom: 14px; }
         .qr-box .qr-actions { display: flex; gap: 10px; }
         .qr-box .qr-actions .btn { flex: 1; text-align: center; }
-        .qr-box .qr-close { margin-top: 12px; }
-        .qr-box .qr-close .btn { background: #ccc; color: #333; }
-        .qr-box .qr-close .btn:hover { background: #bbb; }
         
         @media (max-width: 700px) {
             .header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .header .nav a { margin-left: 0; margin-right: 16px; }
             .row { flex-direction: column; align-items: stretch; }
-            .row .field { flex: 1 1 auto; }
+            .row .field { flex: 1 1 auto; align-items: stretch; }
+            .row .field input[type="text"] { max-width: 100%; }
             .row .field input[type="number"] { width: 100%; }
             .row .field input[type="datetime-local"] { width: 100%; }
             table { font-size: 0.75rem; }
             th, td { padding: 6px 8px; }
             .link-cell input { min-width: 80px; }
+            .modal-box { padding: 20px; margin: 0 16px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>云收集 · 管理</h1>
+            <h1>云收集-管理</h1>
             <div class="nav">
+                <a onclick="openTutorial()">📖教程</a>
                 <a href="/admin/login">登录页</a>
                 <a href="/logout">退出</a>
             </div>
@@ -232,6 +287,14 @@
                     <div class="field">
                         <label>截止时间</label>
                         <input type="datetime-local" name="deadline">
+                    </div>
+                    <div class="field">
+                        <label>文件类型白名单</label>
+                        <input type="text" name="allowed_types" placeholder="留空=不限，逗号分隔">
+                    </div>
+                    <div class="field">
+                        <label>每人提交次数</label>
+                        <input type="number" name="max_submissions" value="0" min="0">
                     </div>
                     <button type="submit" class="btn">创建</button>
                 </div>
@@ -296,9 +359,31 @@
         </div>
     </div>
     
-    <!-- QR Modal -->
-    <div class="qr-modal" id="qr-modal">
-        <div class="qr-box">
+    <!-- ===== 教程模态 ===== -->
+    <div class="modal" id="tutorial-modal">
+        <div class="modal-box">
+            <div class="modal-title">📖 使用教程</div>
+            <div class="modal-body">
+                <p><strong>📁 文件存储路径</strong><br>
+                收集的文件保存在飞牛「应用文件 / 云收集」目录中，按「任务ID / 提交者姓名」自动分目录存放。</p>
+                
+                <p><strong>📎 文件类型白名单</strong><br>
+                创建任务时可设置允许的扩展名，多个用逗号分隔（如 <code>jpg,pdf,mp3</code>），留空则不限制。</p>
+                
+                <p><strong>📋 每人提交次数</strong><br>
+                可限制每个提交者最多上传几次（0 为不限），以「姓名」为维度统计。</p>
+                
+                <p style="color:#999;font-size:0.8rem;margin-top:4px;">更多问题请参考项目文档。</p>
+            </div>
+            <div class="modal-close">
+                <button class="btn" onclick="closeTutorial()">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== QR 模态 ===== -->
+    <div class="modal" id="qr-modal">
+        <div class="modal-box qr-box">
             <div class="qr-title" id="qr-title">二维码</div>
             <div class="qr-sub" id="qr-sub">扫码提交文件</div>
             <div class="qr-img" id="qr-img-container">⏳</div>
@@ -307,13 +392,25 @@
                 <button class="btn btn-sm" id="qr-download-btn">保存图片</button>
                 <button class="btn btn-sm" id="qr-copy-btn">复制链接</button>
             </div>
-            <div class="qr-close">
-                <button class="btn btn-sm" id="qr-close-btn">关闭</button>
+            <div style="margin-top:12px;">
+                <button class="btn btn-sm" id="qr-close-btn" style="background:#ccc;color:#333;">关闭</button>
             </div>
         </div>
     </div>
     
     <script>
+        // ===== 教程 =====
+        function openTutorial() {
+            document.getElementById('tutorial-modal').classList.add('show');
+        }
+        function closeTutorial() {
+            document.getElementById('tutorial-modal').classList.remove('show');
+        }
+        document.getElementById('tutorial-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeTutorial();
+        });
+        
+        // ===== QR =====
         let currentQR = null;
         
         function copyLink(id) {
