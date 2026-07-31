@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云收集-提交成功</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f2f0eb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+            color: #2c2c2c;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            width: 100%;
+            max-width: 440px;
+            padding: 2.4rem 2.2rem 2rem;
+            border: 1px solid #e8e5e0;
+            text-align: center;
+        }
+        .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+        h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.2rem;
+        }
+        .sub {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1.2rem;
+        }
+        .info {
+            background: #f6f5f2;
+            border-radius: 4px;
+            padding: 14px 16px;
+            margin-bottom: 1.2rem;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #444;
+            text-align: left;
+        }
+        .info strong {
+            color: #1a1a1a;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 28px;
+            background: #2c2c2c;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+        .btn:hover { background: #1a1a1a; }
+        .footer {
+            margin-top: 1.4rem;
+            font-size: 0.7rem;
+            color: #ccc;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+        /* 以下区域可自由修改 */
+        .custom {
+            text-align: left;
+            font-size: 0.85rem;
+            color: #555;
+            margin: 0.6rem 0 1rem 0;
+            padding: 12px 16px;
+            background: #faf9f7;
+            border-radius: 4px;
+            border-left: 3px solid #b8a99a;
+            line-height: 1.7;
+        }
+        .custom p {
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="icon">✅</span>
+        <h1>云收集-提交成功</h1>
+        <div class="sub">文件已收到，感谢参与</div>
+
+        <div class="info">
+            <div><strong>任务：</strong>{{ task.name }}</div>
+            <div><strong>提交者：</strong>{{ username }}</div>
+            <div><strong>文件数：</strong>{{ count }} 个</div>
+        </div>
+
+        <!-- 以下区域可自由修改 -->
+        <div class="custom">
+            <p>📌 我们会尽快处理您的文件</p>
+            <p>如有问题请联系：2303537063@qq.com</p>
+        </div>
+        <!-- 可修改区域结束 -->
+
+        <a href="/fc/{{ task.id }}" class="btn">继续提交</a>
+
+        <div class="footer">云收集 v1.1.0-开发者:晦华先生</div>
+    </div>
+</body>
+</html>

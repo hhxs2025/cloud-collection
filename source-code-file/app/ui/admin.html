@@ -6,101 +6,101 @@
     <title>云收集-管理</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; 
-            background: #f2f0eb; 
-            padding: 24px 20px 40px; 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f2f0eb;
+            padding: 24px 20px 40px;
             color: #2c2c2c;
         }
         .container { max-width: 1100px; margin: 0 auto; }
-        
-        .header { 
-            background: #fff; 
+
+        .header {
+            background: #fff;
             border: 1px solid #e8e5e0;
-            border-radius: 4px; 
-            padding: 16px 24px; 
-            margin-bottom: 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            border-radius: 4px;
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
             box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         .header h1 { font-size: 1.2rem; font-weight: 600; color: #1a1a1a; }
-        .header .nav a { 
-            color: #888; 
-            text-decoration: none; 
-            font-size: 0.85rem; 
-            margin-left: 18px; 
+        .header .nav a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-left: 18px;
             cursor: pointer;
         }
         .header .nav a:hover { color: #333; }
-        
-        .card { 
-            background: #fff; 
+
+        .card {
+            background: #fff;
             border: 1px solid #e8e5e0;
-            border-radius: 4px; 
-            padding: 20px 24px; 
+            border-radius: 4px;
+            padding: 20px 24px;
             margin-bottom: 20px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
-        .card h2 { 
-            font-size: 0.95rem; 
-            font-weight: 600; 
-            color: #1a1a1a; 
+        .card h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a1a1a;
             margin-bottom: 14px;
             padding-bottom: 8px;
             border-bottom: 2px solid #e8e5e0;
         }
-        
-        .row { 
-            display: flex; 
-            gap: 10px; 
-            align-items: flex-end; 
-            flex-wrap: wrap; 
+
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-wrap: wrap;
         }
-        .row .field { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 3px; 
+        .row .field {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
             flex: 0 1 auto;
             align-items: center;
         }
-        .row .field label { 
-            font-size: 0.75rem; 
-            font-weight: 500; 
-            color: #666; 
+        .row .field label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #666;
         }
-        .row .field input, 
-        .row .field select { 
-            padding: 6px 10px; 
-            border: 1px solid #d6d2cc; 
-            border-radius: 3px; 
-            font-size: 0.85rem; 
+        .row .field input,
+        .row .field select {
+            padding: 6px 10px;
+            border: 1px solid #d6d2cc;
+            border-radius: 3px;
+            font-size: 0.85rem;
             background: #fcfcfb;
         }
-        .row .field input:focus { 
-            outline: none; 
-            border-color: #b8a99a; 
+        .row .field input:focus {
+            outline: none;
+            border-color: #b8a99a;
             background: #fff;
         }
-        .row .field input[type="text"] { 
-            width: 100%; 
-            min-width: 140px; 
+        .row .field input[type="text"] {
+            width: 100%;
+            min-width: 140px;
             max-width: 200px;
         }
         .row .field input[type="number"] { width: 70px; }
         .row .field input[type="datetime-local"] { width: 160px; }
-        
-        .btn { 
-            padding: 6px 18px; 
-            background: #2c2c2c; 
-            color: #fff; 
-            border: none; 
-            border-radius: 3px; 
-            font-size: 0.8rem; 
-            font-weight: 500; 
-            cursor: pointer; 
+
+        .btn {
+            padding: 6px 18px;
+            background: #2c2c2c;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
             transition: background 0.15s;
             white-space: nowrap;
         }
@@ -110,45 +110,44 @@
         .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
         .btn-success { background: #6b7a6b; }
         .btn-success:hover { background: #4a5a4a; }
-        
-        .alert { 
-            padding: 10px 16px; 
-            border-radius: 3px; 
-            margin-bottom: 14px; 
-            font-size: 0.85rem; 
+
+        .alert {
+            padding: 10px 16px;
+            border-radius: 3px;
+            margin-bottom: 14px;
+            font-size: 0.85rem;
             border: 1px solid #e8e5e0;
         }
         .alert.success { background: #f0f3ed; color: #3d5a3d; border-color: #d0ddd0; }
         .alert.error { background: #f6f0ee; color: #7a4a4a; border-color: #e8d6d4; }
         .alert.warning { background: #fcf8ed; color: #7a6a3d; border-color: #ece4d0; }
-        
+
         .info-text { font-size: 0.7rem; color: #bbb; margin-top: 4px; }
-        
+
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
         th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
         th { background: #f6f5f2; font-weight: 500; color: #555; }
         tr:hover { background: #faf9f7; }
-        .badge { 
-            display: inline-block; 
-            padding: 1px 10px; 
-            border-radius: 3px; 
-            font-size: 0.7rem; 
-            background: #f0f3ed; 
+        .badge {
+            display: inline-block;
+            padding: 1px 10px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            background: #f0f3ed;
             color: #3d5a3d;
         }
         .link-cell { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
-        .link-cell input { 
-            flex: 1; 
-            min-width: 120px; 
-            padding: 4px 8px; 
-            border: 1px solid #d6d2cc; 
-            border-radius: 3px; 
-            font-size: 0.75rem; 
+        .link-cell input {
+            flex: 1;
+            min-width: 120px;
+            padding: 4px 8px;
+            border: 1px solid #d6d2cc;
+            border-radius: 3px;
+            font-size: 0.75rem;
             background: #fcfcfb;
         }
         .empty { text-align: center; color: #bbb; padding: 30px 0; font-size: 0.9rem; }
-        
-        /* ===== 模态窗口通用 ===== */
+
         .modal {
             display: none;
             position: fixed;
@@ -164,12 +163,10 @@
             background: #fff;
             border-radius: 4px;
             padding: 28px 32px;
-            max-width: 480px;
+            max-width: 540px;
             width: 100%;
             border: 1px solid #e8e5e0;
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-            max-height: 80vh;
-            overflow-y: auto;
         }
         .modal-box .modal-title {
             font-size: 1.1rem;
@@ -178,28 +175,6 @@
             padding-bottom: 10px;
             border-bottom: 2px solid #e8e5e0;
             margin-bottom: 16px;
-        }
-        .modal-box .modal-body {
-            font-size: 0.85rem;
-            line-height: 1.8;
-            color: #444;
-        }
-        .modal-box .modal-body p {
-            margin-bottom: 10px;
-        }
-        .modal-box .modal-body ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-        .modal-box .modal-body ul li {
-            margin-bottom: 4px;
-        }
-        .modal-box .modal-body code {
-            background: #f0ede8;
-            padding: 0 6px;
-            border-radius: 2px;
-            font-size: 0.8rem;
-            color: #555;
         }
         .modal-box .modal-close {
             margin-top: 16px;
@@ -212,18 +187,57 @@
             color: #333;
         }
         .modal-box .modal-close .btn:hover { background: #bbb; }
-        
-        /* ===== QR 模态 ===== */
-        .qr-box {
-            text-align: center;
-        }
+
+        .qr-box { text-align: center; }
         .qr-box .qr-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
         .qr-box .qr-sub { font-size: 0.8rem; color: #888; margin-bottom: 14px; }
         .qr-box .qr-img { width: 160px; height: 160px; margin: 0 auto 12px; background: #f6f5f2; display: flex; align-items: center; justify-content: center; }
         .qr-box .qr-url { font-size: 0.7rem; color: #999; word-break: break-all; margin-bottom: 14px; }
         .qr-box .qr-actions { display: flex; gap: 10px; }
         .qr-box .qr-actions .btn { flex: 1; text-align: center; }
-        
+
+        /* 编辑模态窗内联样式 */
+        .edit-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .edit-row .field {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1 1 180px;
+        }
+        .edit-row .field label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #666;
+        }
+        .edit-row .field input {
+            padding: 6px 10px;
+            border: 1px solid #d6d2cc;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            background: #fcfcfb;
+        }
+        .edit-row .field input:focus {
+            outline: none;
+            border-color: #b8a99a;
+            background: #fff;
+        }
+        .edit-row .field input[type="text"] { min-width: 160px; }
+        .edit-row .field input[type="number"] { width: 80px; }
+        .edit-row .field input[type="datetime-local"] { width: 180px; }
+        .edit-row .field-full {
+            flex: 1 1 100%;
+        }
+        .edit-tip {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 4px;
+        }
+
         @media (max-width: 700px) {
             .header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .header .nav a { margin-left: 0; margin-right: 16px; }
@@ -236,6 +250,10 @@
             th, td { padding: 6px 8px; }
             .link-cell input { min-width: 80px; }
             .modal-box { padding: 20px; margin: 0 16px; }
+            .edit-row { flex-direction: column; }
+            .edit-row .field { flex: 1 1 auto; }
+            .edit-row .field input[type="number"] { width: 100%; }
+            .edit-row .field input[type="datetime-local"] { width: 100%; }
         }
     </style>
 </head>
@@ -244,12 +262,11 @@
         <div class="header">
             <h1>云收集-管理</h1>
             <div class="nav">
-                <a onclick="openTutorial()">📖教程</a>
                 <a href="/admin/login">登录页</a>
                 <a href="/logout">退出</a>
             </div>
         </div>
-        
+
         <div id="alert-container">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% for category, message in messages %}
@@ -257,7 +274,7 @@
           {% endfor %}
         {% endwith %}
         </div>
-        
+
         <!-- 公网地址 -->
         <div class="card">
             <h2>公网地址</h2>
@@ -270,7 +287,7 @@
                 <button class="btn btn-success" id="save_public_url_btn">保存</button>
             </div>
         </div>
-        
+
         <!-- 新建任务 -->
         <div class="card">
             <h2>新建收集任务</h2>
@@ -289,7 +306,7 @@
                         <input type="datetime-local" name="deadline">
                     </div>
                     <div class="field">
-                        <label>文件类型白名单</label>
+                        <label>允许的文件类型</label>
                         <input type="text" name="allowed_types" placeholder="留空=不限，逗号分隔">
                     </div>
                     <div class="field">
@@ -300,7 +317,7 @@
                 </div>
             </form>
         </div>
-        
+
         <!-- 任务列表 -->
         <div class="card">
             <h2>已有任务</h2>
@@ -309,11 +326,13 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>名称</th>
-                                <th>上限</th>
-                                <th>截止</th>
+                                <th>任务名称</th>
+                                <th>文件大小</th>
+                                <th>文件类型</th>
+                                <th>截止时间</th>
+                                <th>提交次数</th>
                                 <th>链接</th>
-                                <th></th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -321,7 +340,9 @@
                             <tr>
                                 <td><strong>{{ task.name }}</strong></td>
                                 <td>{{ task.max_size_mb }} MB</td>
+                                <td>{{ task.allowed_types if task.allowed_types else '不限' }}</td>
                                 <td>{{ task.deadline.replace('T', ' ') if task.deadline else '无' }}</td>
+                                <td>{{ task.max_submissions if task.max_submissions > 0 else '不限' }}</td>
                                 <td>
                                     <div class="link-cell">
                                         <input type="text" id="link-{{ task.id }}" value="{{ base_url }}/fc/{{ task.id }}" readonly>
@@ -330,6 +351,7 @@
                                     </div>
                                 </td>
                                 <td>
+                                    <button class="btn btn-sm" onclick="openEditModal('{{ task.id }}')">编辑</button>
                                     <form method="post" action="/admin/task/delete/{{ task.id }}" style="display:inline;" onsubmit="return confirm('确定删除？')">
                                         <button type="submit" class="btn btn-danger btn-sm">删除</button>
                                     </form>
@@ -343,7 +365,7 @@
                 <div class="empty">暂无任务，创建一个吧</div>
             {% endif %}
         </div>
-        
+
         <!-- 修改密码 -->
         <div class="card">
             <h2>修改密码</h2>
@@ -358,30 +380,49 @@
             </form>
         </div>
     </div>
-    
-    <!-- ===== 教程模态 ===== -->
-    <div class="modal" id="tutorial-modal">
+
+    <!-- ===== 编辑模态窗 ===== -->
+    <div class="modal" id="edit-modal">
         <div class="modal-box">
-            <div class="modal-title">📖 使用教程</div>
-            <div class="modal-body">
-                <p><strong>📁 文件存储路径</strong><br>
-                收集的文件保存在飞牛「应用文件 / 云收集」目录中，按「任务ID / 提交者姓名」自动分目录存放。</p>
-                
-                <p><strong>📎 文件类型白名单</strong><br>
-                创建任务时可设置允许的扩展名，多个用逗号分隔（如 <code>jpg,pdf,mp3</code>），留空则不限制。</p>
-                
-                <p><strong>📋 每人提交次数</strong><br>
-                可限制每个提交者最多上传几次（0 为不限），以「姓名」为维度统计。</p>
-                
-                <p style="color:#999;font-size:0.8rem;margin-top:4px;">更多问题请参考项目文档。</p>
-            </div>
-            <div class="modal-close">
-                <button class="btn" onclick="closeTutorial()">关闭</button>
-            </div>
+            <div class="modal-title">编辑任务</div>
+            <form id="edit-form">
+                <input type="hidden" id="edit-task-id">
+                <div class="edit-row">
+                    <div class="field field-full">
+                        <label>任务名称</label>
+                        <input type="text" id="edit-name" required>
+                    </div>
+                </div>
+                <div class="edit-row">
+                    <div class="field">
+                        <label>单文件上限 (MB)</label>
+                        <input type="number" id="edit-max-size" min="1">
+                    </div>
+                    <div class="field">
+                        <label>截止时间</label>
+                        <input type="datetime-local" id="edit-deadline">
+                    </div>
+                </div>
+                <div class="edit-row">
+                    <div class="field">
+                        <label>允许的文件类型</label>
+                        <input type="text" id="edit-allowed-types" placeholder="留空=不限，逗号分隔">
+                    </div>
+                    <div class="field">
+                        <label>每人提交次数</label>
+                        <input type="number" id="edit-max-submissions" min="0">
+                    </div>
+                </div>
+                <div class="edit-tip">修改配置不影响已上传的文件</div>
+                <div class="modal-close">
+                    <button type="button" class="btn" onclick="closeEditModal()">取消</button>
+                    <button type="submit" class="btn" id="edit-save-btn">保存</button>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <!-- ===== QR 模态 ===== -->
+
+    <!-- ===== QR 模态窗 ===== -->
     <div class="modal" id="qr-modal">
         <div class="modal-box qr-box">
             <div class="qr-title" id="qr-title">二维码</div>
@@ -397,42 +438,32 @@
             </div>
         </div>
     </div>
-    
+
     <script>
-        // ===== 教程 =====
-        function openTutorial() {
-            document.getElementById('tutorial-modal').classList.add('show');
-        }
-        function closeTutorial() {
-            document.getElementById('tutorial-modal').classList.remove('show');
-        }
-        document.getElementById('tutorial-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeTutorial();
-        });
-        
-        // ===== QR =====
-        let currentQR = null;
-        
+        // ===== 复制链接 =====
         function copyLink(id) {
             const input = document.getElementById('link-' + id);
             input.select();
             document.execCommand('copy');
             alert('已复制');
         }
-        
+
+        // ===== QR =====
+        let currentQR = null;
+
         function closeQR() {
             document.getElementById('qr-modal').classList.remove('show');
         }
-        
+
         async function showQR(id, url, name) {
             const modal = document.getElementById('qr-modal');
             document.getElementById('qr-title').textContent = name;
             document.getElementById('qr-url').textContent = url;
             modal.classList.add('show');
-            
+
             const container = document.getElementById('qr-img-container');
             container.textContent = '⏳ 生成中...';
-            
+
             try {
                 const res = await fetch('/qr?url=' + encodeURIComponent(url));
                 const data = await res.json();
@@ -446,12 +477,12 @@
                 container.textContent = '❌ 失败';
             }
         }
-        
+
         document.getElementById('qr-close-btn').addEventListener('click', closeQR);
         document.getElementById('qr-modal').addEventListener('click', function(e) {
             if (e.target === this) closeQR();
         });
-        
+
         document.getElementById('qr-download-btn').addEventListener('click', function() {
             if (currentQR) {
                 const a = document.createElement('a');
@@ -462,7 +493,7 @@
                 alert('请先生成二维码');
             }
         });
-        
+
         document.getElementById('qr-copy-btn').addEventListener('click', function() {
             const url = document.getElementById('qr-url').textContent;
             const input = document.createElement('input');
@@ -473,8 +504,8 @@
             document.body.removeChild(input);
             alert('已复制');
         });
-        
-        // 保存公网地址
+
+        // ===== 保存公网地址 =====
         document.getElementById('save_public_url_btn').addEventListener('click', async function() {
             const url = document.getElementById('public_url_input').value.trim();
             const btn = this;
@@ -492,6 +523,76 @@
                     location.reload();
                 } else {
                     alert('保存失败');
+                }
+            } catch {
+                alert('网络错误');
+            }
+            btn.disabled = false;
+            btn.textContent = '保存';
+        });
+
+        // ===== v1.1.0 编辑功能 =====
+        let currentEditTaskId = null;
+
+        function openEditModal(taskId) {
+            currentEditTaskId = taskId;
+            const modal = document.getElementById('edit-modal');
+            modal.classList.add('show');
+
+            // 从表格中读取当前数据（通过 DOM 获取）
+            const rows = document.querySelectorAll('table tbody tr');
+            for (const row of rows) {
+                const linkInput = row.querySelector('.link-cell input');
+                if (linkInput) {
+                    const id = linkInput.id.replace('link-', '');
+                    if (id === taskId) {
+                        const cells = row.querySelectorAll('td');
+                        document.getElementById('edit-name').value = cells[0].textContent.trim();
+                        document.getElementById('edit-max-size').value = parseInt(cells[1].textContent);
+                        document.getElementById('edit-deadline').value = cells[3].textContent.trim() !== '无' ? cells[3].textContent.trim().replace(' ', 'T') : '';
+                        document.getElementById('edit-allowed-types').value = cells[2].textContent.trim() !== '不限' ? cells[2].textContent.trim() : '';
+                        document.getElementById('edit-max-submissions').value = cells[4].textContent.trim() !== '不限' ? parseInt(cells[4].textContent) : 0;
+                        break;
+                    }
+                }
+            }
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.remove('show');
+            currentEditTaskId = null;
+        }
+
+        document.getElementById('edit-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeEditModal();
+        });
+
+        document.getElementById('edit-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!currentEditTaskId) return;
+
+            const btn = document.getElementById('edit-save-btn');
+            btn.disabled = true;
+            btn.textContent = '保存中...';
+
+            const formData = new FormData();
+            formData.append('task_name', document.getElementById('edit-name').value.trim());
+            formData.append('max_size_mb', document.getElementById('edit-max-size').value);
+            formData.append('deadline', document.getElementById('edit-deadline').value);
+            formData.append('allowed_types', document.getElementById('edit-allowed-types').value.trim());
+            formData.append('max_submissions', document.getElementById('edit-max-submissions').value || 0);
+
+            try {
+                const res = await fetch('/admin/task/edit/' + currentEditTaskId, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('任务已更新');
+                    location.reload();
+                } else {
+                    alert(data.message || '更新失败');
                 }
             } catch {
                 alert('网络错误');
