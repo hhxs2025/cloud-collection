@@ -39,43 +39,45 @@
             color: #888;
             margin-top: 2px;
         }
+
+        /* ===== 提交页顶部信息区域 ===== */
         .task-name {
-            background: #f6f5f2;
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            color: #555;
-            border-radius: 3px;
-            margin-bottom: 0.5rem;
-            display: inline-block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 2px;
         }
         .deadline {
             font-size: 0.8rem;
-            color: #b8860b;
-            background: #fcf8ed;
-            padding: 4px 12px;
-            border-radius: 3px;
-            display: inline-block;
-            margin-left: 8px;
+            color: #888;
+            background: transparent;
+            padding: 0;
+            margin-bottom: 4px;
         }
         .rules {
-            margin: 0.4rem 0 0.8rem 0;
             font-size: 0.8rem;
             color: #888;
             line-height: 1.6;
         }
         .rules span {
             display: inline-block;
-            margin-right: 12px;
+            margin-right: 16px;
         }
-        /* v1.2.0: 使用说明由后端传入 */
+        .rules span:last-child {
+            margin-right: 0;
+        }
+
+        /* ===== 提交页自定义内容区域 ===== */
         .guide {
-            background: #f6f5f2;
-            padding: 14px 16px;
+            background: transparent;
+            padding: 0;
             margin-bottom: 1.8rem;
             font-size: 0.85rem;
             line-height: 1.7;
             color: #444;
-            border-left: 3px solid #b8a99a;
+            border: none;
+            border-radius: 4px;
+            overflow: hidden;
         }
         .guide strong { color: #1a1a1a; }
         .guide p { margin-bottom: 2px; }
@@ -85,6 +87,8 @@
             border-radius: 4px;
             margin: 4px 0;
         }
+
+        /* ===== 表单 ===== */
         .form-group { margin-bottom: 1.5rem; }
         label {
             display: block;
@@ -207,23 +211,23 @@
             <div class="sub">文件上传-{{ task.name }}</div>
         </div>
 
-        <div>
-            <span class="task-name">{{ task.name }}</span>
+        <!-- ===== 提交页顶部信息区域 ===== -->
+        <div style="text-align:center; background:transparent;">
+            <div class="task-name">{{ task.name }}</div>
             {% if task.deadline %}
-                <span class="deadline">截止 {{ task.deadline.replace('T', ' ') }}</span>
+                <div class="deadline">截止 {{ task.deadline.replace('T', ' ') }}</div>
             {% endif %}
+            <div class="rules">
+                {% if task.allowed_types %}
+                    <span>允许格式：{{ task.allowed_types }}</span>
+                {% endif %}
+                {% if task.max_submissions > 0 %}
+                    <span>每人限提交 {{ task.max_submissions }} 次</span>
+                {% endif %}
+            </div>
         </div>
 
-        <div class="rules">
-            {% if task.allowed_types %}
-                <span>允许格式：{{ task.allowed_types }}</span>
-            {% endif %}
-            {% if task.max_submissions > 0 %}
-                <span>每人限提交 {{ task.max_submissions }} 次</span>
-            {% endif %}
-        </div>
-
-        <!-- v1.2.0: 使用说明由后端传入，支持HTML和图片 -->
+        <!-- ===== 提交页自定义内容区域 ===== -->
         <div class="guide">
             {{ guide_html|safe }}
         </div>
@@ -257,6 +261,7 @@
 
         <div class="footer">云收集 v1.2.0 -开发者:晦华先生</div>
     </div>
+
     <script>
         const fileInput = document.getElementById('file-input');
         const fileArea = document.getElementById('file-area');
