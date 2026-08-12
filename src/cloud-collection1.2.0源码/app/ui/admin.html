@@ -92,6 +92,39 @@
         .row .field input[type="number"] { width: 70px; }
         .row .field input[type="datetime-local"] { width: 160px; }
 
+        .config-group {
+            margin-bottom: 14px;
+        }
+        .config-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 4px;
+        }
+        .config-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d6d2cc;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            background: #fcfcfb;
+            font-family: inherit;
+            min-height: 100px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .config-group textarea:focus {
+            outline: none;
+            border-color: #b8a99a;
+            background: #fff;
+        }
+        .config-group .hint {
+            font-size: 0.7rem;
+            color: #bbb;
+            margin-top: 4px;
+        }
+
         .btn {
             padding: 6px 18px;
             background: #2c2c2c;
@@ -128,14 +161,6 @@
         th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
         th { background: #f6f5f2; font-weight: 500; color: #555; }
         tr:hover { background: #faf9f7; }
-        .badge {
-            display: inline-block;
-            padding: 1px 10px;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            background: #f0f3ed;
-            color: #3d5a3d;
-        }
         .link-cell { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
         .link-cell input {
             flex: 1;
@@ -196,7 +221,6 @@
         .qr-box .qr-actions { display: flex; gap: 10px; }
         .qr-box .qr-actions .btn { flex: 1; text-align: center; }
 
-        /* 编辑模态窗内联样式 */
         .edit-row {
             display: flex;
             gap: 12px;
@@ -286,6 +310,17 @@
                 </div>
                 <button class="btn btn-success" id="save_public_url_btn">保存</button>
             </div>
+        </div>
+
+        <!-- v1.2.0: 提交页设置 -->
+        <div class="card">
+            <h2>提交页设置</h2>
+            <div class="config-group">
+                <label>使用说明（支持HTML）</label>
+                <textarea id="submit_guide_html" rows="4">{{ page_config.submit_guide_html or '' }}</textarea>
+                <div class="hint">可使用 {max_size} 占位符显示任务文件大小上限，支持 &lt;img&gt; 标签引用自定义图片</div>
+            </div>
+            <button class="btn btn-success" id="save_page_config_btn">保存</button>
         </div>
 
         <!-- 新建任务 -->
@@ -531,6 +566,35 @@
             btn.textContent = '保存';
         });
 
+        // ===== v1.2.0: 保存提交页配置 =====
+        document.getElementById('save_page_config_btn').addEventListener('click', async function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.textContent = '保存中...';
+
+            const data = {
+                submit_guide_html: document.getElementById('submit_guide_html').value
+            };
+
+            try {
+                const res = await fetch('/admin/save_page_config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    alert('提交页设置已保存');
+                } else {
+                    alert(result.message || '保存失败');
+                }
+            } catch {
+                alert('网络错误');
+            }
+            btn.disabled = false;
+            btn.textContent = '保存';
+        });
+
         // ===== v1.1.0 编辑功能 =====
         let currentEditTaskId = null;
 
@@ -539,7 +603,6 @@
             const modal = document.getElementById('edit-modal');
             modal.classList.add('show');
 
-            // 从表格中读取当前数据（通过 DOM 获取）
             const rows = document.querySelectorAll('table tbody tr');
             for (const row of rows) {
                 const linkInput = row.querySelector('.link-cell input');

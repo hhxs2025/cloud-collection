@@ -67,6 +67,7 @@
             display: inline-block;
             margin-right: 12px;
         }
+        /* v1.2.0: 使用说明由后端传入 */
         .guide {
             background: #f6f5f2;
             padding: 14px 16px;
@@ -77,6 +78,13 @@
             border-left: 3px solid #b8a99a;
         }
         .guide strong { color: #1a1a1a; }
+        .guide p { margin-bottom: 2px; }
+        .guide p:last-child { margin-bottom: 0; }
+        .guide img {
+            max-width: 100%;
+            border-radius: 4px;
+            margin: 4px 0;
+        }
         .form-group { margin-bottom: 1.5rem; }
         label {
             display: block;
@@ -215,10 +223,9 @@
             {% endif %}
         </div>
 
+        <!-- v1.2.0: 使用说明由后端传入，支持HTML和图片 -->
         <div class="guide">
-            <strong>使用说明</strong><br>
-            填写姓名 → 选择文件 → 提交上传。<br>
-            单文件上限 {{ task.max_size_mb }} MB，支持多选。
+            {{ guide_html|safe }}
         </div>
 
         <div id="alert-container"></div>
@@ -248,7 +255,7 @@
             <button type="submit" class="btn" id="submit-btn">提交</button>
         </form>
 
-        <div class="footer">云收集 v1.1.0 -开发者:晦华先生</div>
+        <div class="footer">云收集 v1.2.0 -开发者:晦华先生</div>
     </div>
     <script>
         const fileInput = document.getElementById('file-input');
@@ -308,7 +315,6 @@
             progressBar.style.width = '0%';
             progressText.textContent = '0%';
 
-            // v1.1.0: 使用普通表单提交，后端返回重定向
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '/upload/{{ task.id }}', true);
             xhr.upload.addEventListener('progress', (e) => {
@@ -323,12 +329,10 @@
                 submitBtn.textContent = '提交';
                 progressContainer.style.display = 'none';
                 if (xhr.status === 302 || xhr.status === 200) {
-                    // 检查是否重定向到成功页
                     if (xhr.responseURL && xhr.responseURL.indexOf('/success/') !== -1) {
                         window.location.href = xhr.responseURL;
                         return;
                     }
-                    // 如果是 JSON 响应（错误情况）
                     try {
                         const res = JSON.parse(xhr.responseText);
                         showAlert(res.message, res.success ? 'success' : 'error');
@@ -338,7 +342,6 @@
                             usernameInput.value = '';
                         }
                     } catch {
-                        // 非 JSON，可能是 HTML，尝试跳转
                         if (xhr.responseText.indexOf('success') !== -1) {
                             window.location.href = '/success/{{ task.id }}?username=' + encodeURIComponent(username) + '&count=' + fileInput.files.length;
                         }

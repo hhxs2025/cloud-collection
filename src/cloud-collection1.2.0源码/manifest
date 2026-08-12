@@ -1,0 +1,19 @@
+appname=cloud-collection
+version=1.2.0
+display_name=云收集
+desc="""<p>云收集(原名:文件收集助手)是一款为FNOS开发的轻量级文件收集工具，支持创建收集任务、多文件上传、二维码分享，适合团队文件收集、学生作业提交等场景。</p><p><strong>核心功能:</strong></p><p>1.管理后台公网收集地址前缀设置；</p><p>2.管理后台新建收集任务，支持任务名称设置、单文件大小上限设置、收集截止时间、文件类型后缀白名单设置【弥补飞牛自带收集功能的短板】；</p><p>3.管理后台收集任务列表显示，支持收集地址链接与二维码；</p><p>4.管理后台密码修改。</p><p>5.文件提交页自定义(支持HTML格式)【弥补飞牛自带收集功能的短板】。</p><p><strong>1.2.0新增功能:</strong></p><p>管理后台页，新增文件提交页自定义功能。</p><hr><p><strong>文件提交页自定义方法说明:</strong></p><p>当前仅支持HTML格式,如需插入图片,请将图片放入默认或自行设置的收集文件存储目录下custom文件夹下。</p><p>自定义页插入图片示例：&lt;img src=&quot;/uploads/custom/banner.png&quot;&gt;</p><p><strong>收集文件存储目录自定义方法说明:</strong></p><p>若在安装向导里自定义了文件存储目录,则需在[应用设置]—[访问权限]—[允许访问文件夹]中添加自定义的文件夹,才能使收集而来的文件存储在自定义路径里。</p>"""
+platform=x86
+source=thirdparty
+maintainer=晦华先生
+maintainer_url=https://gitee.com/hhxs2025/cloud-collection/blob/master/README.md
+distributor=晦华先生
+distributor_url=https://www.hhxs2025.top/?post=5
+ctl_stop=true
+desktop_uidir=ui
+desktop_applaunchname=cloud-collection.Application
+checkport=false
+disable_authorization_path=false
+changelog=<p><strong>1.1.0新增功能</strong></p><p>1.管理后台新增任务列表规则显示功能。</p><p>2.管理后台新增既有任务编辑功能。</p><p>3.前端新增提交成功页。</p>
+<table align="center" border="0" cellpadding="5">
+<td align="center">
+<img src="https://gitee.com/hhxs2025/cloud-collection/raw/master/previews/2.PNG" alt="界面2" width="90%" style="border:1px solid #ddd; border-radius:4px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">

@@ -1,5 +1,19 @@
 [
   {
+    "stepTitle": "端口设置",
+    "items": [
+      {
+        "type": "text",
+        "field": "wizard_port",
+        "label": "服务端口设置",
+        "rules": [],
+        "options": [],
+        "helpText": "请设置端口号",
+        "initValue": "5664"
+      }
+    ]
+  },
+  {
     "stepTitle": "存储位置",
     "items": [
       {
@@ -16,22 +30,8 @@
         "label": "自定义存储路径（可选）",
         "rules": [],
         "options": [],
-        "helpText": "留空则使用默认路径，例如：/vol1/1000/我的收集文件",
+        "helpText": "留空则使用默认路径，/vol1/@appshare/cloud-collection",
         "initValue": ""
-      }
-    ]
-  },
-  {
-    "stepTitle": "端口设置",
-    "items": [
-      {
-        "type": "text",
-        "field": "wizard_port",
-        "label": "服务端口设置",
-        "rules": [],
-        "options": [],
-        "helpText": "请设置端口号",
-        "initValue": "5664"
       }
     ]
   }

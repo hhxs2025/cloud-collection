@@ -13,36 +13,37 @@ start_process() {
         return 0
     fi
     log_msg "启动应用..."
+
     cd "${TRIM_APPDEST}/server" || {
         echo "无法进入目录" > "$TRIM_TEMP_LOGFILE"
         return 1
     }
 
-    # 导出所有环境变量
     export wizard_port="${wizard_port:-5664}"
     export TRIM_SERVICE_PORT="${wizard_port}"
-    export wizard_storage_type="${wizard_storage_type:-appshare}"
+    export wizard_storage_volume="${wizard_storage_volume:-vol1}"
     export wizard_upload_path="${wizard_upload_path:-}"
     export wizard_admin_user="${wizard_admin_user:-admin}"
     export wizard_admin_pass="${wizard_admin_pass:-admin123}"
     export TRIM_APPDEST="${TRIM_APPDEST}"
     export TRIM_PKGVAR="${TRIM_PKGVAR}"
     export TRIM_PKGETC="${TRIM_PKGETC}"
-    export TRIM_DATA_SHARE_PATH="${TRIM_DATA_SHARE_PATH}"
+    export TRIM_DATA_SHARE_PATH="/${wizard_storage_volume}/@appshare/cloud-collection"
     export TRIM_DATA_ACCESSIBLE_PATHS="${TRIM_DATA_ACCESSIBLE_PATHS:-}"
     export TRIM_TEMP_LOGFILE="${TRIM_TEMP_LOGFILE}"
 
     log_msg "========================================"
-    log_msg "TRIM_APPDEST = ${TRIM_APPDEST}"
-    log_msg "TRIM_PKGVAR = ${TRIM_PKGVAR}"
+    log_msg "存储卷: ${wizard_storage_volume}"
+    log_msg "数据目录: ${TRIM_DATA_SHARE_PATH}"
+    log_msg "服务端口: ${TRIM_SERVICE_PORT}"
     log_msg "========================================"
 
-    # 设置 PYTHONPATH，让 Python 能加载 vendor 里的依赖
     PYTHONPATH="${TRIM_APPDEST}/server/vendor:${PYTHONPATH}" \
     python3 app.pyc >> "$LOG_FILE" 2>&1 &
-    
+
     echo $! > "$PID_FILE"
     sleep 2
+
     if kill -0 $(cat "$PID_FILE") 2>/dev/null; then
         log_msg "启动成功 PID=$(cat "$PID_FILE")"
         return 0
